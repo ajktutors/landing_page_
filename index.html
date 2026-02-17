@@ -1,25 +1,561 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Landing Page</title>
+  <title>AJK Maths Support | Parent Questionnaire</title>
+  <meta name="description" content="Short parent questionnaire for GCSE & A Level Maths (online only)." />
+
   <style>
-    body{font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial; margin:0; color:#0b1530;}
-    .wrap{max-width:900px; margin:0 auto; padding:56px 20px;}
-    .card{border:1px solid rgba(0,0,0,.1); border-radius:16px; padding:28px;}
-    .btn{display:inline-block; padding:12px 16px; border-radius:12px; text-decoration:none; border:1px solid rgba(0,0,0,.15);}
+    :root{
+      --navy:#0b2a52;
+      --navy2:#103a73;
+      --navy3:#0a2344;
+      --gold:#f2b233;
+      --gold2:#ffcf66;
+      --ink:#0b1530;
+      --muted:#445067;
+      --line:rgba(11,42,82,.14);
+      --card:#ffffff;
+      --shadow: 0 14px 40px rgba(11,42,82,.14);
+      --shadow2: 0 24px 80px rgba(11,42,82,.18);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 980px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--ink);
+      background:
+        radial-gradient(900px 520px at 15% 10%, rgba(242,178,51,.18), transparent 60%),
+        radial-gradient(900px 620px at 90% 18%, rgba(16,58,115,.16), transparent 60%),
+        linear-gradient(180deg, #f7fbff, #ffffff 46%, #f7fbff);
+    }
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    .top{padding:26px 0 10px}
+    .brandCenter{display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center}
+    .logoRing{
+      width:130px; height:130px;
+      border-radius:999px;
+      padding:8px;
+      background: linear-gradient(135deg, rgba(242,178,51,.55), rgba(16,58,115,.22));
+      box-shadow: var(--shadow2);
+    }
+    .logo{
+      width:100%; height:100%;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid rgba(11,42,82,.10);
+      overflow:hidden;
+      display:grid; place-items:center;
+    }
+    .logo img{width:100%; height:100%; object-fit:cover; display:block;}
+    .brandName{margin:0; font-size:20px; font-weight:1000; letter-spacing:-.4px; color:var(--navy); line-height:1.1;}
+    .brandSub{margin:0; color:var(--muted); font-weight:800; font-size:13px;}
+
+    .card{
+      margin-top:16px;
+      border-radius: var(--radius2);
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2);
+      padding:18px;
+    }
+    .progressTop{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;}
+    .bar{
+      height:12px; border-radius:999px;
+      background: rgba(16,58,115,.08);
+      border:1px solid rgba(16,58,115,.12);
+      overflow:hidden; flex:1;
+    }
+    .bar > div{
+      height:100%; width:0%;
+      border-radius:999px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      transition: width .25s ease;
+    }
+    .stepCount{font-weight:1000; color:var(--navy); font-size:12px; white-space:nowrap;}
+    .stepTitle{margin:0 0 6px; font-size:18px; font-weight:1000; color:var(--navy3); letter-spacing:-.3px;}
+    .stepHelp{margin:0 0 14px; color:var(--muted); line-height:1.55; font-weight:700; font-size:13px;}
+
+    label{display:block; font-size:12px; font-weight:1000; color:var(--navy); margin:0 0 6px;}
+    select,input{
+      width:100%;
+      padding:13px 12px;
+      border-radius:14px;
+      border:1px solid rgba(11,42,82,.16);
+      background:#fff;
+      outline:none;
+      font:inherit;
+      color:var(--ink);
+      box-shadow: 0 10px 26px rgba(11,42,82,.06);
+    }
+    select:focus,input:focus{
+      border-color: rgba(242,178,51,.65);
+      box-shadow: 0 0 0 4px rgba(242,178,51,.18), 0 10px 26px rgba(11,42,82,.06);
+    }
+
+    .scaleWrap{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;}
+    .scaleBtn{
+      width:46px; height:46px;
+      border-radius:16px;
+      border:1px solid rgba(11,42,82,.16);
+      background:#fff;
+      box-shadow: 0 10px 26px rgba(11,42,82,.06);
+      display:grid; place-items:center;
+      font-weight:1000;
+      color:var(--navy3);
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
+    }
+    .scaleBtn:hover{transform: translateY(-1px)}
+    .scaleBtn.selected{
+      border-color: rgba(242,178,51,.75);
+      box-shadow: 0 0 0 4px rgba(242,178,51,.18), 0 14px 34px rgba(11,42,82,.10);
+    }
+
+    .navRow{
+      margin-top:14px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+    }
+    .btn{
+      border:0; cursor:pointer;
+      border-radius:14px;
+      padding:12px 14px;
+      font-weight:1000;
+      letter-spacing:.2px;
+      user-select:none;
+      transition: transform .12s ease, opacity .12s ease, box-shadow .12s ease;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btnGhost{
+      background:#fff;
+      border:1px solid rgba(11,42,82,.16);
+      color:var(--navy3);
+      box-shadow: 0 10px 26px rgba(11,42,82,.06);
+    }
+    .btnGold{
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color:#0b1530;
+      box-shadow: 0 14px 36px rgba(242,178,51,.20);
+    }
+    .btn[disabled]{opacity:.55; cursor:not-allowed}
+
+    .alert{
+      display:none; margin-top:10px;
+      padding:10px 12px; border-radius:14px;
+      background: rgba(255,92,92,.10);
+      border:1px solid rgba(255,92,92,.35);
+      color:#7a1b1b; font-weight:1000; font-size:12px;
+    }
+    .ok{
+      display:none; margin-top:10px;
+      padding:10px 12px; border-radius:14px;
+      background: rgba(57,217,138,.14);
+      border:1px solid rgba(57,217,138,.35);
+      color:#0f4b2f; font-weight:1000; font-size:12px;
+      line-height:1.45;
+    }
+
+    footer{margin:18px 0 34px; text-align:center; color:var(--muted); font-weight:800; font-size:12px;}
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <h1>Your Offer Headline</h1>
-    <p>One sentence explaining what you do and who it’s for.</p>
-    <div class="card">
-      <h2>Call to action</h2>
-      <p>Put your CTA here (book a call, request a quote, etc.).</p>
-      <a class="btn" href="mailto:you@email.com">Email me</a>
+  <header class="top">
+    <div class="wrap brandCenter">
+      <div class="logoRing">
+        <div class="logo">
+          <img id="logoImg" alt="AJK Logo">
+        </div>
+      </div>
+      <p class="brandName">AJK Maths Support</p>
+      <p class="brandSub">GCSE & A Level • Online only</p>
     </div>
+  </header>
+
+  <div class="wrap">
+
+    <section class="card" id="questionnaire">
+      <div class="progressTop">
+        <div class="bar"><div id="barFill"></div></div>
+        <div class="stepCount" id="stepCount">Step 1 of 5</div>
+      </div>
+
+      <h2 class="stepTitle" id="stepTitle">Loading…</h2>
+      <p class="stepHelp" id="stepHelp"></p>
+
+      <div id="stepBody"></div>
+
+      <div class="alert" id="errBox"></div>
+      <div class="ok" id="okBox"></div>
+
+      <div class="navRow">
+        <button class="btn btnGhost" id="backBtn" type="button">Back</button>
+        <button class="btn btnGold" id="nextBtn" type="button">Next</button>
+      </div>
+    </section>
+
+    <footer>© AJK Maths Support • Online only</footer>
   </div>
+
+  <script>
+    const LOGO_URL =
+      "https://raw.githubusercontent.com/Zo3s5/ElevynSystems/b915d6e832665f2feea9d5bdb6ecdb4b92a3aef4/WhatsApp%20Image%202026-01-26%20at%2020.35.35.jpeg";
+
+    const SHEETS_WEBAPP_URL =
+      "https://script.google.com/macros/s/AKfycbxELDNUWq8lDQLg2f3qVHB-DsPpyDvQNlVjODun6unmiwVmI1vuiMqRWkto976KfkzH/exec";
+
+    document.getElementById("logoImg").src = LOGO_URL;
+
+    const answers = {
+      targetGrade: "",
+      examBoard: "",
+      nextExamTimeframe: "",
+      confidence: "",
+      parentName: "",
+      parentPhone: "",
+      parentEmail: "",
+      source: "AJK Landing Page"
+    };
+
+    const gradeOptions = [
+      "Not sure",
+      "GCSE: 1","GCSE: 2","GCSE: 3","GCSE: 4","GCSE: 5","GCSE: 6","GCSE: 7","GCSE: 8","GCSE: 9",
+      "A Level: E","A Level: D","A Level: C","A Level: B","A Level: A","A Level: A*"
+    ];
+
+    const examBoards = [
+      "AQA",
+      "Edexcel",
+      "OCR",
+      "WJEC / Eduqas",
+      "CCEA (Northern Ireland)",
+      "SQA (Scotland)",
+      "Other / Not sure"
+    ];
+
+    const elTitle = document.getElementById("stepTitle");
+    const elHelp  = document.getElementById("stepHelp");
+    const elBody  = document.getElementById("stepBody");
+    const errBox  = document.getElementById("errBox");
+    const okBox   = document.getElementById("okBox");
+    const backBtn = document.getElementById("backBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const barFill = document.getElementById("barFill");
+    const stepCount = document.getElementById("stepCount");
+
+    function showError(msg){
+      errBox.style.display = "block";
+      errBox.textContent = msg;
+      okBox.style.display = "none";
+    }
+    function clearError(){
+      errBox.style.display = "none";
+      errBox.textContent = "";
+    }
+    function showOk(msg){
+      okBox.style.display = "block";
+      okBox.textContent = msg;
+      errBox.style.display = "none";
+    }
+    function esc(s){
+      return String(s)
+        .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+    }
+    function selectField(id, label, options, placeholder){
+      return `
+        <div class="field">
+          <label>${esc(label)}</label>
+          <select id="${id}">
+            <option value="">${esc(placeholder || "Select…")}</option>
+            ${options.map(o=>`<option value="${esc(o)}">${esc(o)}</option>`).join("")}
+          </select>
+        </div>
+      `;
+    }
+
+    function isValidUKPhone(raw){
+      const v = String(raw || "").trim();
+      if(!v) return false;
+      const cleaned = v.replace(/\s|-/g, "");
+      if(!/^\+?\d+$/.test(cleaned)) return false;
+
+      if(cleaned.startsWith("+44")){
+        const rest = cleaned.slice(3);
+        return rest.length === 10 && rest[0] !== "0";
+      }
+      if(cleaned.startsWith("0")){
+        return cleaned.length === 11;
+      }
+      return false;
+    }
+
+    function normaliseUKPhone(raw){
+      const cleaned = String(raw || "").trim().replace(/\s|-/g, "");
+      if(cleaned.startsWith("+44")) return cleaned;
+      if(cleaned.startsWith("0")) return "+44" + cleaned.slice(1);
+      return cleaned;
+    }
+
+    function isValidEmail(raw){
+      const v = String(raw || "").trim();
+      if(!v) return true;
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+    }
+
+    const steps = [
+      {
+        key:"targetGrade",
+        title:"1) Target grade",
+        help:"What grade are you aiming for?",
+        render(){ return selectField("targetGrade","Target grade *",gradeOptions,"Select target…"); },
+        after(){
+          const el = document.getElementById("targetGrade");
+          el.value = answers.targetGrade || "";
+          el.addEventListener("change", ()=> answers.targetGrade = el.value);
+        },
+        validate(){ return answers.targetGrade ? true : "Please select a target grade."; }
+      },
+      {
+        key:"examBoard",
+        title:"2) Exam board",
+        help:"Select the exam board for Maths.",
+        render(){ return selectField("examBoard","Exam board *",examBoards,"Select exam board…"); },
+        after(){
+          const el = document.getElementById("examBoard");
+          el.value = answers.examBoard || "";
+          el.addEventListener("change", ()=> answers.examBoard = el.value);
+        },
+        validate(){ return answers.examBoard ? true : "Please select an exam board."; }
+      },
+      {
+        key:"nextExamTimeframe",
+        title:"3) Next exam date / timeframe",
+        help:"Pick a timeframe. If you know the exact date, choose it.",
+        render(){
+          return `
+            <div class="field">
+              <label>Next exam timeframe *</label>
+              <select id="timeframeSel">
+                <option value="">Select…</option>
+                <option>In the next 2–4 weeks</option>
+                <option>In the next 1–2 months</option>
+                <option>May/June (this year)</option>
+                <option>Autumn resits</option>
+                <option>I know the exact date</option>
+              </select>
+            </div>
+            <div class="field" id="dateWrap" style="display:none;">
+              <label>Exact exam date *</label>
+              <input id="examDate" type="date" />
+            </div>
+          `;
+        },
+        after(){
+          const sel = document.getElementById("timeframeSel");
+          const wrap = document.getElementById("dateWrap");
+          const date = document.getElementById("examDate");
+
+          if(answers.nextExamTimeframe){
+            if(answers.nextExamTimeframe.startsWith("Exact: ")){
+              sel.value = "I know the exact date";
+              wrap.style.display="block";
+              date.value = answers.nextExamTimeframe.replace("Exact: ","");
+            } else {
+              sel.value = answers.nextExamTimeframe;
+            }
+          }
+
+          sel.addEventListener("change", ()=>{
+            wrap.style.display = (sel.value === "I know the exact date") ? "block" : "none";
+            if(sel.value !== "I know the exact date") date.value = "";
+          });
+        },
+        collect(){
+          const sel = document.getElementById("timeframeSel").value;
+          const date = document.getElementById("examDate").value;
+          answers.nextExamTimeframe = (sel === "I know the exact date")
+            ? (date ? `Exact: ${date}` : "")
+            : sel;
+        },
+        validate(){
+          if(!answers.nextExamTimeframe) return "Please select a timeframe (or provide the exact date).";
+          if(answers.nextExamTimeframe.startsWith("Exact: ") && answers.nextExamTimeframe.length < 12) return "Please choose the exam date.";
+          return true;
+        }
+      },
+      {
+        key:"confidence",
+        title:"4) Confidence level in Maths",
+        help:"Choose a number from 1 to 10.",
+        render(){
+          let nums = "";
+          for(let i=1;i<=10;i++) nums += `<div class="scaleBtn" data-n="${i}">${i}</div>`;
+          return `<div class="scaleWrap" id="scaleWrap">${nums}</div>`;
+        },
+        after(){
+          const wrap = document.getElementById("scaleWrap");
+          const btns = [...wrap.querySelectorAll(".scaleBtn")];
+
+          function select(n){
+            answers.confidence = String(n);
+            btns.forEach(b=>b.classList.toggle("selected", b.dataset.n === String(n)));
+          }
+          if(answers.confidence) select(answers.confidence);
+
+          btns.forEach(b=> b.addEventListener("click", ()=> select(b.dataset.n)));
+        },
+        validate(){ return answers.confidence ? true : "Please choose a confidence score (1–10)."; }
+      },
+      {
+        key:"contact",
+        title:"Your details",
+        help:"Please enter your details and submit.",
+        render(){
+          return `
+            <div class="field">
+              <label>Parent/Guardian name *</label>
+              <input id="parentName" placeholder="Your name" autocomplete="name" />
+            </div>
+            <div class="field">
+              <label>Phone number *</label>
+              <input
+                id="parentPhone"
+                inputmode="tel"
+                autocomplete="tel"
+                placeholder="e.g. 07xxxxxxxxx or +447xxxxxxxxx"
+              />
+            </div>
+            <div class="field">
+              <label>Email (optional)</label>
+              <input
+                id="parentEmail"
+                type="email"
+                inputmode="email"
+                autocomplete="email"
+                placeholder="you@email.com"
+              />
+            </div>
+          `;
+        },
+        after(){
+          const n = document.getElementById("parentName");
+          const p = document.getElementById("parentPhone");
+          const e = document.getElementById("parentEmail");
+
+          n.value = answers.parentName || "";
+          p.value = answers.parentPhone || "";
+          e.value = answers.parentEmail || "";
+
+          p.addEventListener("input", ()=>{
+            p.value = p.value.replace(/[^\d\s+\-]/g, "");
+          });
+
+          p.addEventListener("blur", ()=>{
+            if(isValidUKPhone(p.value)) p.value = normaliseUKPhone(p.value);
+          });
+        },
+        collect(){
+          answers.parentName = document.getElementById("parentName").value.trim();
+          answers.parentPhone = document.getElementById("parentPhone").value.trim();
+          answers.parentEmail = document.getElementById("parentEmail").value.trim();
+        },
+        validate(){
+          if(!answers.parentName) return "Please enter your name.";
+
+          if(!answers.parentPhone) return "Please enter your phone number.";
+          if(!isValidUKPhone(answers.parentPhone)){
+            return "Please enter a valid UK phone number (07xxxxxxxxx or +447xxxxxxxxx).";
+          }
+
+          if(!isValidEmail(answers.parentEmail)){
+            return "Please enter a valid email address (or leave it blank).";
+          }
+
+          answers.parentPhone = normaliseUKPhone(answers.parentPhone);
+          return true;
+        }
+      }
+    ];
+
+    let i = 0;
+
+    function render(){
+      clearError();
+      okBox.style.display="none";
+
+      const step = steps[i];
+      elTitle.textContent = step.title;
+      elHelp.textContent = step.help;
+      elBody.innerHTML = step.render();
+      if(step.after) step.after();
+
+      backBtn.style.display = i===0 ? "none" : "inline-block";
+      nextBtn.textContent = (step.key==="contact") ? "Submit" : "Next";
+
+      const total = steps.length;
+      stepCount.textContent = `Step ${i+1} of ${total}`;
+      barFill.style.width = `${Math.round(((i+1)/total)*100)}%`;
+    }
+
+    function validate(){
+      const step = steps[i];
+      const v = step.validate ? step.validate() : true;
+      if(v===true) return true;
+      showError(v);
+      return false;
+    }
+
+    function collect(){
+      const step = steps[i];
+      if(step.collect) step.collect();
+    }
+
+    backBtn.addEventListener("click", ()=>{
+      clearError();
+      if(i>0){ i--; render(); }
+    });
+
+    nextBtn.addEventListener("click", async ()=>{
+      clearError();
+      collect();
+      if(!validate()) return;
+
+      if(steps[i].key === "contact"){
+        nextBtn.disabled = true;
+        showOk("Submitting…");
+
+        try{
+          await fetch(SHEETS_WEBAPP_URL, {
+            method:"POST",
+            mode:"no-cors",
+            body: JSON.stringify({ timestamp:new Date().toISOString(), ...answers })
+          });
+
+          showOk("Thank you for your submission - we will be with you shortly.");
+          nextBtn.style.display = "none";
+          backBtn.style.display = "none";
+        } catch(e){
+          showError("Submission failed. Please try again.");
+          nextBtn.disabled = false;
+        }
+        return;
+      }
+
+      i++;
+      render();
+      document.getElementById("questionnaire").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+
+    render();
+  </script>
 </body>
 </html>
