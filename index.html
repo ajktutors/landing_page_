@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>AJK Maths Support | Parent Questionnaire</title>
-  <meta name="description" content="Short parent questionnaire for GCSE & A Level Maths (online only)." />
+  <meta name="description" content="Short parent questionnaire for GCSE Maths (online only)." />
 
   <style>
     :root{
@@ -25,6 +25,7 @@
       --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family:var(--font);
@@ -36,6 +37,7 @@
     }
     .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
 
+    /* Header / brand */
     .top{padding:26px 0 10px}
     .brandCenter{display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center}
     .logoRing{
@@ -57,6 +59,122 @@
     .brandName{margin:0; font-size:20px; font-weight:1000; letter-spacing:-.4px; color:var(--navy); line-height:1.1;}
     .brandSub{margin:0; color:var(--muted); font-weight:800; font-size:13px;}
 
+    /* Hero */
+    .hero{
+      margin-top:10px;
+      padding:18px;
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.88));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero:before{
+      content:"";
+      position:absolute;
+      inset:-80px -120px auto auto;
+      width:340px; height:340px;
+      background: radial-gradient(circle at 30% 30%, rgba(242,178,51,.35), transparent 55%),
+                  radial-gradient(circle at 70% 70%, rgba(16,58,115,.22), transparent 55%);
+      transform: rotate(18deg);
+      pointer-events:none;
+    }
+    .heroInner{position:relative; text-align:center; padding:10px 10px 6px}
+    .headline{
+      margin:8px 0 10px;
+      font-size: clamp(30px, 4.6vw, 48px);
+      line-height:1.05;
+      font-weight:1100;
+      letter-spacing:-.8px;
+      color:var(--navy3);
+    }
+    .headline .gold{
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      text-shadow: 0 10px 30px rgba(242,178,51,.18);
+    }
+    .subhead{
+      margin:0 auto 14px;
+      max-width: 760px;
+      color:var(--muted);
+      font-weight:800;
+      font-size: clamp(14px, 2.2vw, 18px);
+      line-height:1.55;
+    }
+
+    /* CTA */
+    .ctaRow{
+      margin-top:14px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .btn{
+      border:0; cursor:pointer;
+      border-radius:14px;
+      padding:12px 14px;
+      font-weight:1000;
+      letter-spacing:.2px;
+      user-select:none;
+      transition: transform .12s ease, opacity .12s ease, box-shadow .12s ease;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width: 220px;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btnGold{
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color:#0b1530;
+      box-shadow: 0 14px 36px rgba(242,178,51,.20);
+    }
+
+    /* Video */
+    .videoCard{
+      margin-top:14px;
+      padding:16px;
+      border-radius: var(--radius2);
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2);
+    }
+    .videoFrame{
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(11,42,82,.12);
+      box-shadow: 0 10px 26px rgba(11,42,82,.08);
+      background:#fff;
+      aspect-ratio: 9 / 16; /* better for Shorts */
+      width:100%;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+    .videoFrame iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+    }
+    .videoLink{
+      margin-top:10px;
+      text-align:center;
+      font-weight:900;
+      font-size:13px;
+    }
+    .videoLink a{
+      color:var(--navy2);
+      text-decoration:none;
+      border-bottom:1px dashed rgba(16,58,115,.35);
+    }
+    .videoLink a:hover{opacity:.9}
+
+    /* Form card */
     .card{
       margin-top:16px;
       border-radius: var(--radius2);
@@ -65,22 +183,17 @@
       box-shadow: var(--shadow2);
       padding:18px;
     }
-    .progressTop{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;}
-    .bar{
-      height:12px; border-radius:999px;
-      background: rgba(16,58,115,.08);
-      border:1px solid rgba(16,58,115,.12);
-      overflow:hidden; flex:1;
+    .stepTitle{margin:0 0 6px; font-size:20px; font-weight:1100; color:var(--navy3); letter-spacing:-.3px; text-align:center;}
+    .stepHelp{margin:0 0 16px; color:var(--muted); line-height:1.55; font-weight:800; font-size:13px; text-align:center;}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
     }
-    .bar > div{
-      height:100%; width:0%;
-      border-radius:999px;
-      background: linear-gradient(135deg, var(--gold), var(--gold2));
-      transition: width .25s ease;
+    @media (min-width: 720px){
+      .grid.two{grid-template-columns: 1fr 1fr;}
     }
-    .stepCount{font-weight:1000; color:var(--navy); font-size:12px; white-space:nowrap;}
-    .stepTitle{margin:0 0 6px; font-size:18px; font-weight:1000; color:var(--navy3); letter-spacing:-.3px;}
-    .stepHelp{margin:0 0 14px; color:var(--muted); line-height:1.55; font-weight:700; font-size:13px;}
 
     label{display:block; font-size:12px; font-weight:1000; color:var(--navy); margin:0 0 6px;}
     select,input{
@@ -99,60 +212,18 @@
       box-shadow: 0 0 0 4px rgba(242,178,51,.18), 0 10px 26px rgba(11,42,82,.06);
     }
 
-    .scaleWrap{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;}
-    .scaleBtn{
-      width:46px; height:46px;
-      border-radius:16px;
-      border:1px solid rgba(11,42,82,.16);
-      background:#fff;
-      box-shadow: 0 10px 26px rgba(11,42,82,.06);
-      display:grid; place-items:center;
-      font-weight:1000;
-      color:var(--navy3);
-      cursor:pointer;
-      user-select:none;
-      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
-    }
-    .scaleBtn:hover{transform: translateY(-1px)}
-    .scaleBtn.selected{
-      border-color: rgba(242,178,51,.75);
-      box-shadow: 0 0 0 4px rgba(242,178,51,.18), 0 14px 34px rgba(11,42,82,.10);
-    }
-
     .navRow{
       margin-top:14px;
-      display:flex; align-items:center; justify-content:space-between;
+      display:flex; align-items:center; justify-content:center;
       gap:12px; flex-wrap:wrap;
     }
-    .btn{
-      border:0; cursor:pointer;
-      border-radius:14px;
-      padding:12px 14px;
-      font-weight:1000;
-      letter-spacing:.2px;
-      user-select:none;
-      transition: transform .12s ease, opacity .12s ease, box-shadow .12s ease;
-    }
-    .btn:active{transform: translateY(1px)}
-    .btnGhost{
-      background:#fff;
-      border:1px solid rgba(11,42,82,.16);
-      color:var(--navy3);
-      box-shadow: 0 10px 26px rgba(11,42,82,.06);
-    }
-    .btnGold{
-      background: linear-gradient(135deg, var(--gold), var(--gold2));
-      color:#0b1530;
-      box-shadow: 0 14px 36px rgba(242,178,51,.20);
-    }
-    .btn[disabled]{opacity:.55; cursor:not-allowed}
-
     .alert{
       display:none; margin-top:10px;
       padding:10px 12px; border-radius:14px;
       background: rgba(255,92,92,.10);
       border:1px solid rgba(255,92,92,.35);
       color:#7a1b1b; font-weight:1000; font-size:12px;
+      text-align:center;
     }
     .ok{
       display:none; margin-top:10px;
@@ -161,6 +232,7 @@
       border:1px solid rgba(57,217,138,.35);
       color:#0f4b2f; font-weight:1000; font-size:12px;
       line-height:1.45;
+      text-align:center;
     }
 
     footer{margin:18px 0 34px; text-align:center; color:var(--muted); font-weight:800; font-size:12px;}
@@ -176,34 +248,101 @@
         </div>
       </div>
       <p class="brandName">AJK Maths Support</p>
-      <p class="brandSub">GCSE & A Level • Online only</p>
+      <p class="brandSub">GCSE • Online only</p>
     </div>
   </header>
 
-  <div class="wrap">
+  <main class="wrap">
+    <!-- HERO -->
+    <section class="hero" aria-label="Hero">
+      <div class="heroInner">
+        <h1 class="headline">
+          Master GCSE Maths, <span class="gold">Rebuild Foundations</span> to secure a grade.
+        </h1>
+        <p class="subhead">
+          <strong style="color:var(--navy3)">Stop guessing, start solving.</strong>
+          We teach the exam code schools don’t have the time for.
+        </p>
 
-    <section class="card" id="questionnaire">
-      <div class="progressTop">
-        <div class="bar"><div id="barFill"></div></div>
-        <div class="stepCount" id="stepCount">Step 1 of 5</div>
-      </div>
-
-      <h2 class="stepTitle" id="stepTitle">Loading…</h2>
-      <p class="stepHelp" id="stepHelp"></p>
-
-      <div id="stepBody"></div>
-
-      <div class="alert" id="errBox"></div>
-      <div class="ok" id="okBox"></div>
-
-      <div class="navRow">
-        <button class="btn btnGhost" id="backBtn" type="button">Back</button>
-        <button class="btn btnGold" id="nextBtn" type="button">Next</button>
+        <div class="ctaRow">
+          <a class="btn btnGold" href="#questionnaire" id="bookBtn">Book / Apply Now</a>
+        </div>
       </div>
     </section>
 
+    <!-- VIDEO (YouTube Shorts) -->
+    <section class="videoCard" id="video" aria-label="Video section">
+      <div class="videoFrame" id="videoFrame">
+        <iframe
+          id="ytEmbed"
+          src="https://www.youtube.com/embed/3XycHlIjBq0?rel=0&modestbranding=1"
+          title="AJK Maths Support - YouTube video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <div class="videoLink">
+        <a id="ytLink" href="https://www.youtube.com/shorts/3XycHlIjBq0" target="_blank" rel="noopener">
+          Open on YouTube
+        </a>
+      </div>
+    </section>
+
+    <!-- QUESTIONNAIRE -->
+    <section class="card" id="questionnaire" aria-label="Questionnaire">
+      <h2 class="stepTitle">Parent Questionnaire</h2>
+      <p class="stepHelp">Fill this in and we’ll contact you shortly.</p>
+
+      <form id="qForm" novalidate>
+        <div class="grid two">
+          <div class="field">
+            <label for="firstName">Name *</label>
+            <input id="firstName" name="firstName" placeholder="First name" autocomplete="given-name" required />
+          </div>
+          <div class="field">
+            <label for="lastName">Surname *</label>
+            <input id="lastName" name="lastName" placeholder="Surname" autocomplete="family-name" required />
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div class="field">
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required />
+          </div>
+          <div class="field">
+            <label for="phone">Contact number *</label>
+            <input id="phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="e.g. 07xxxxxxxxx or +447xxxxxxxxx" required />
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="yearGroup">Year group *</label>
+            <select id="yearGroup" name="yearGroup" required>
+              <option value="">Select…</option>
+              <option>Year 7</option>
+              <option>Year 8</option>
+              <option>Year 9</option>
+              <option>Year 10</option>
+              <option>Year 11</option>
+              <option>Other / Not sure</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="alert" id="errBox"></div>
+        <div class="ok" id="okBox"></div>
+
+        <div class="navRow">
+          <button class="btn btnGold" id="submitBtn" type="submit">Submit</button>
+        </div>
+      </form>
+    </section>
+
     <footer>© AJK Maths Support • Online only</footer>
-  </div>
+  </main>
 
   <script>
     const LOGO_URL =
@@ -212,74 +351,37 @@
     const SHEETS_WEBAPP_URL =
       "https://script.google.com/macros/s/AKfycbxELDNUWq8lDQLg2f3qVHB-DsPpyDvQNlVjODun6unmiwVmI1vuiMqRWkto976KfkzH/exec";
 
+    const YOUTUBE_VIDEO_ID = "3XycHlIjBq0";
+
     document.getElementById("logoImg").src = LOGO_URL;
 
-    const answers = {
-      targetGrade: "",
-      examBoard: "",
-      nextExamTimeframe: "",
-      confidence: "",
-      parentName: "",
-      parentPhone: "",
-      parentEmail: "",
-      source: "AJK Landing Page"
-    };
+    // Keep embed + link in sync from the ID
+    const ytEmbed = document.getElementById("ytEmbed");
+    const ytLink  = document.getElementById("ytLink");
+    ytEmbed.src = `https://www.youtube.com/embed/${encodeURIComponent(YOUTUBE_VIDEO_ID)}?rel=0&modestbranding=1`;
+    ytLink.href = `https://www.youtube.com/shorts/${encodeURIComponent(YOUTUBE_VIDEO_ID)}`;
+    ytLink.textContent = "Open on YouTube";
 
-    const gradeOptions = [
-      "Not sure",
-      "GCSE: 1","GCSE: 2","GCSE: 3","GCSE: 4","GCSE: 5","GCSE: 6","GCSE: 7","GCSE: 8","GCSE: 9",
-      "A Level: E","A Level: D","A Level: C","A Level: B","A Level: A","A Level: A*"
-    ];
-
-    const examBoards = [
-      "AQA",
-      "Edexcel",
-      "OCR",
-      "WJEC / Eduqas",
-      "CCEA (Northern Ireland)",
-      "SQA (Scotland)",
-      "Other / Not sure"
-    ];
-
-    const elTitle = document.getElementById("stepTitle");
-    const elHelp  = document.getElementById("stepHelp");
-    const elBody  = document.getElementById("stepBody");
-    const errBox  = document.getElementById("errBox");
-    const okBox   = document.getElementById("okBox");
-    const backBtn = document.getElementById("backBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const barFill = document.getElementById("barFill");
-    const stepCount = document.getElementById("stepCount");
+    const form = document.getElementById("qForm");
+    const errBox = document.getElementById("errBox");
+    const okBox = document.getElementById("okBox");
+    const submitBtn = document.getElementById("submitBtn");
 
     function showError(msg){
       errBox.style.display = "block";
       errBox.textContent = msg;
       okBox.style.display = "none";
     }
-    function clearError(){
-      errBox.style.display = "none";
-      errBox.textContent = "";
-    }
     function showOk(msg){
       okBox.style.display = "block";
       okBox.textContent = msg;
       errBox.style.display = "none";
     }
-    function esc(s){
-      return String(s)
-        .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;").replaceAll("'","&#039;");
-    }
-    function selectField(id, label, options, placeholder){
-      return `
-        <div class="field">
-          <label>${esc(label)}</label>
-          <select id="${id}">
-            <option value="">${esc(placeholder || "Select…")}</option>
-            ${options.map(o=>`<option value="${esc(o)}">${esc(o)}</option>`).join("")}
-          </select>
-        </div>
-      `;
+    function clearMsg(){
+      errBox.style.display = "none";
+      errBox.textContent = "";
+      okBox.style.display = "none";
+      okBox.textContent = "";
     }
 
     function isValidUKPhone(raw){
@@ -307,255 +409,64 @@
 
     function isValidEmail(raw){
       const v = String(raw || "").trim();
-      if(!v) return true;
       return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
     }
 
-    const steps = [
-      {
-        key:"targetGrade",
-        title:"1) Target grade",
-        help:"What grade are you aiming for?",
-        render(){ return selectField("targetGrade","Target grade *",gradeOptions,"Select target…"); },
-        after(){
-          const el = document.getElementById("targetGrade");
-          el.value = answers.targetGrade || "";
-          el.addEventListener("change", ()=> answers.targetGrade = el.value);
-        },
-        validate(){ return answers.targetGrade ? true : "Please select a target grade."; }
-      },
-      {
-        key:"examBoard",
-        title:"2) Exam board",
-        help:"Select the exam board for Maths.",
-        render(){ return selectField("examBoard","Exam board *",examBoards,"Select exam board…"); },
-        after(){
-          const el = document.getElementById("examBoard");
-          el.value = answers.examBoard || "";
-          el.addEventListener("change", ()=> answers.examBoard = el.value);
-        },
-        validate(){ return answers.examBoard ? true : "Please select an exam board."; }
-      },
-      {
-        key:"nextExamTimeframe",
-        title:"3) Next exam date / timeframe",
-        help:"Pick a timeframe. If you know the exact date, choose it.",
-        render(){
-          return `
-            <div class="field">
-              <label>Next exam timeframe *</label>
-              <select id="timeframeSel">
-                <option value="">Select…</option>
-                <option>In the next 2–4 weeks</option>
-                <option>In the next 1–2 months</option>
-                <option>May/June (this year)</option>
-                <option>Autumn resits</option>
-                <option>I know the exact date</option>
-              </select>
-            </div>
-            <div class="field" id="dateWrap" style="display:none;">
-              <label>Exact exam date *</label>
-              <input id="examDate" type="date" />
-            </div>
-          `;
-        },
-        after(){
-          const sel = document.getElementById("timeframeSel");
-          const wrap = document.getElementById("dateWrap");
-          const date = document.getElementById("examDate");
-
-          if(answers.nextExamTimeframe){
-            if(answers.nextExamTimeframe.startsWith("Exact: ")){
-              sel.value = "I know the exact date";
-              wrap.style.display="block";
-              date.value = answers.nextExamTimeframe.replace("Exact: ","");
-            } else {
-              sel.value = answers.nextExamTimeframe;
-            }
-          }
-
-          sel.addEventListener("change", ()=>{
-            wrap.style.display = (sel.value === "I know the exact date") ? "block" : "none";
-            if(sel.value !== "I know the exact date") date.value = "";
-          });
-        },
-        collect(){
-          const sel = document.getElementById("timeframeSel").value;
-          const date = document.getElementById("examDate").value;
-          answers.nextExamTimeframe = (sel === "I know the exact date")
-            ? (date ? `Exact: ${date}` : "")
-            : sel;
-        },
-        validate(){
-          if(!answers.nextExamTimeframe) return "Please select a timeframe (or provide the exact date).";
-          if(answers.nextExamTimeframe.startsWith("Exact: ") && answers.nextExamTimeframe.length < 12) return "Please choose the exam date.";
-          return true;
-        }
-      },
-      {
-        key:"confidence",
-        title:"4) Confidence level in Maths",
-        help:"Choose a number from 1 to 10.",
-        render(){
-          let nums = "";
-          for(let i=1;i<=10;i++) nums += `<div class="scaleBtn" data-n="${i}">${i}</div>`;
-          return `<div class="scaleWrap" id="scaleWrap">${nums}</div>`;
-        },
-        after(){
-          const wrap = document.getElementById("scaleWrap");
-          const btns = [...wrap.querySelectorAll(".scaleBtn")];
-
-          function select(n){
-            answers.confidence = String(n);
-            btns.forEach(b=>b.classList.toggle("selected", b.dataset.n === String(n)));
-          }
-          if(answers.confidence) select(answers.confidence);
-
-          btns.forEach(b=> b.addEventListener("click", ()=> select(b.dataset.n)));
-        },
-        validate(){ return answers.confidence ? true : "Please choose a confidence score (1–10)."; }
-      },
-      {
-        key:"contact",
-        title:"Your details",
-        help:"Please enter your details and submit.",
-        render(){
-          return `
-            <div class="field">
-              <label>Parent/Guardian name *</label>
-              <input id="parentName" placeholder="Your name" autocomplete="name" />
-            </div>
-            <div class="field">
-              <label>Phone number *</label>
-              <input
-                id="parentPhone"
-                inputmode="tel"
-                autocomplete="tel"
-                placeholder="e.g. 07xxxxxxxxx or +447xxxxxxxxx"
-              />
-            </div>
-            <div class="field">
-              <label>Email (optional)</label>
-              <input
-                id="parentEmail"
-                type="email"
-                inputmode="email"
-                autocomplete="email"
-                placeholder="you@email.com"
-              />
-            </div>
-          `;
-        },
-        after(){
-          const n = document.getElementById("parentName");
-          const p = document.getElementById("parentPhone");
-          const e = document.getElementById("parentEmail");
-
-          n.value = answers.parentName || "";
-          p.value = answers.parentPhone || "";
-          e.value = answers.parentEmail || "";
-
-          p.addEventListener("input", ()=>{
-            p.value = p.value.replace(/[^\d\s+\-]/g, "");
-          });
-
-          p.addEventListener("blur", ()=>{
-            if(isValidUKPhone(p.value)) p.value = normaliseUKPhone(p.value);
-          });
-        },
-        collect(){
-          answers.parentName = document.getElementById("parentName").value.trim();
-          answers.parentPhone = document.getElementById("parentPhone").value.trim();
-          answers.parentEmail = document.getElementById("parentEmail").value.trim();
-        },
-        validate(){
-          if(!answers.parentName) return "Please enter your name.";
-
-          if(!answers.parentPhone) return "Please enter your phone number.";
-          if(!isValidUKPhone(answers.parentPhone)){
-            return "Please enter a valid UK phone number (07xxxxxxxxx or +447xxxxxxxxx).";
-          }
-
-          if(!isValidEmail(answers.parentEmail)){
-            return "Please enter a valid email address (or leave it blank).";
-          }
-
-          answers.parentPhone = normaliseUKPhone(answers.parentPhone);
-          return true;
-        }
-      }
-    ];
-
-    let i = 0;
-
-    function render(){
-      clearError();
-      okBox.style.display="none";
-
-      const step = steps[i];
-      elTitle.textContent = step.title;
-      elHelp.textContent = step.help;
-      elBody.innerHTML = step.render();
-      if(step.after) step.after();
-
-      backBtn.style.display = i===0 ? "none" : "inline-block";
-      nextBtn.textContent = (step.key==="contact") ? "Submit" : "Next";
-
-      const total = steps.length;
-      stepCount.textContent = `Step ${i+1} of ${total}`;
-      barFill.style.width = `${Math.round(((i+1)/total)*100)}%`;
-    }
-
-    function validate(){
-      const step = steps[i];
-      const v = step.validate ? step.validate() : true;
-      if(v===true) return true;
-      showError(v);
-      return false;
-    }
-
-    function collect(){
-      const step = steps[i];
-      if(step.collect) step.collect();
-    }
-
-    backBtn.addEventListener("click", ()=>{
-      clearError();
-      if(i>0){ i--; render(); }
+    document.getElementById("phone").addEventListener("input", (e)=>{
+      e.target.value = e.target.value.replace(/[^\d\s+\-]/g, "");
+    });
+    document.getElementById("phone").addEventListener("blur", (e)=>{
+      if(isValidUKPhone(e.target.value)) e.target.value = normaliseUKPhone(e.target.value);
     });
 
-    nextBtn.addEventListener("click", async ()=>{
-      clearError();
-      collect();
-      if(!validate()) return;
+    form.addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      clearMsg();
 
-      if(steps[i].key === "contact"){
-        nextBtn.disabled = true;
-        showOk("Submitting…");
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName  = document.getElementById("lastName").value.trim();
+      const email     = document.getElementById("email").value.trim();
+      let phone       = document.getElementById("phone").value.trim();
+      const yearGroup = document.getElementById("yearGroup").value;
 
-        try{
-          await fetch(SHEETS_WEBAPP_URL, {
-            method:"POST",
-            mode:"no-cors",
-            body: JSON.stringify({ timestamp:new Date().toISOString(), ...answers })
-          });
+      if(!firstName) return showError("Please enter a name.");
+      if(!lastName)  return showError("Please enter a surname.");
+      if(!email)     return showError("Please enter an email.");
+      if(!isValidEmail(email)) return showError("Please enter a valid email address.");
+      if(!phone)     return showError("Please enter a contact number.");
+      if(!isValidUKPhone(phone)) return showError("Please enter a valid UK phone number (07xxxxxxxxx or +447xxxxxxxxx).");
+      if(!yearGroup) return showError("Please select a year group.");
 
-          showOk("Thank you for your submission - we will be with you shortly.");
-          nextBtn.style.display = "none";
-          backBtn.style.display = "none";
-        } catch(e){
-          showError("Submission failed. Please try again.");
-          nextBtn.disabled = false;
-        }
-        return;
+      phone = normaliseUKPhone(phone);
+
+      const payload = {
+        timestamp: new Date().toISOString(),
+        source: "AJK Landing Page",
+        firstName,
+        lastName,
+        email,
+        phone,
+        yearGroup
+      };
+
+      submitBtn.disabled = true;
+      showOk("Submitting…");
+
+      try{
+        await fetch(SHEETS_WEBAPP_URL, {
+          method:"POST",
+          mode:"no-cors",
+          body: JSON.stringify(payload)
+        });
+
+        showOk("Thank you — we’ve received your details and will contact you shortly.");
+        form.reset();
+      } catch(err){
+        showError("Submission failed. Please try again.");
+      } finally {
+        submitBtn.disabled = false;
       }
-
-      i++;
-      render();
-      document.getElementById("questionnaire").scrollIntoView({behavior:"smooth", block:"start"});
     });
-
-    render();
   </script>
 </body>
 </html>
